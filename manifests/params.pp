@@ -7,13 +7,41 @@
 #
 class lsb::params {
   case $::osfamily {
-    'debian': {
-      $lsb_package = 'lsb-release'
+    'Debian': {
+      case $::operatingsystemmajrelease {
+        '8': {
+          $lsb_package = 'lsb-release'
+        }
+        default: {
+          fail("The ${module_name} module is not supported on an ${::operatingsystem}${::operatingsystemmajrelease} distribution.")
+        }
+      }
     }
-    'redhat': {
-      $lsb_package = 'redhat-lsb'
+    'RedHat': {
+      case $::operatingsystemmajrelease {
+        '6': {
+          $lsb_package = 'redhat-lsb'
+        }
+        '7': {
+          $lsb_package = 'redhat-lsb'
+        }
+        default: {
+          fail("The ${module_name} module is not supported on an ${::operatingsystem}${::operatingsystemmajrelease} distribution.")
+        }
+      }
     }
-    default: { }
+    'Linux': {
+      case $::operatingsystem {
+        'Amazon': {
+          $lsb_package = 'redhat-lsb'
+        }
+        default: {
+          fail("The ${module_name} module is not supported on an ${::operatingsystem} distribution.")
+        }
+      }
+    }
+    default: {
+      fail("The ${module_name} module is not supported on an ${::osfamily} based system.")
+    }
   }
-
 }
