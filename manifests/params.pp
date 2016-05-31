@@ -6,6 +6,8 @@
 #   - Defines numerous parameters used by other classes
 #
 class lsb::params {
+  $lsb_package_ensure = 'latest'
+
   case $::osfamily {
     'Debian': {
       $lsb_package = 'lsb-release'

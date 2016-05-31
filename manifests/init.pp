@@ -25,7 +25,7 @@
 #    }
 #
 class lsb (
-  $ensure = 'latest'
+  $ensure = $::lsb::params::lsb_package_ensure
 ) inherits ::lsb::params {
   package { $::lsb::params::lsb_package:
     ensure  => $ensure,
