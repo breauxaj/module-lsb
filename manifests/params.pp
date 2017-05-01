@@ -10,13 +10,30 @@ class lsb::params {
 
   case $::osfamily {
     'Debian': {
-      $lsb_package = 'lsb-release'
+      case $::operatingsystem {
+        default: {
+          case $::operatingsystemmajrelease {
+            default: {
+              $lsb_package = 'lsb-release'
+            }
+          }
+        }
+      }
     }
     'RedHat': {
-      $lsb_package = 'redhat-lsb'
+      case $::operatingsystem {
+        default: {
+          case $::operatingsystemmajrelease {
+            default: {
+              $lsb_package = 'redhat-lsb'
+            }
+          }
+        }
+      }
     }
     default: {
       fail("The ${module_name} module is not supported on an ${::osfamily} based system.")
     }
   }
+
 }
